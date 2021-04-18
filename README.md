@@ -77,4 +77,4 @@ with NSubstitute.
 
 ## Side Note
 The solution is working and all unit tests pass. Due to time constraints, calculation logic 
-may result in incorrect value and tests only cover two business rules.
+may result in incorrect value and tests only cover three business rules.
