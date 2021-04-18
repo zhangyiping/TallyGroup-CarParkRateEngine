@@ -12,14 +12,13 @@ namespace RateCalculationEngine
         static void Main(string[] args)
         {
             var container = BuildContainer();
-
             var flatRateCalculatorFactory = container.Resolve<Func<RateType, IFlatRateCalculator>>();
-            ParkFeeCalculator parkFeeCalculator = new ParkFeeCalculator(container.Resolve<IRateTypeService>(), 
+            IParkingFeeCalculator parkingFeeCalculator = new ParkingFeeCalculator(container.Resolve<IRateTypeService>(), 
                 flatRateCalculatorFactory, container.Resolve<IVariableRateCalculator>());
             
             var enterAt = new DateTime(2021, 4, 16, 7, 0, 0);
             var exitAt = new DateTime(2021, 4, 16, 16, 0, 0);
-            var result = parkFeeCalculator.CalculateParkingFee(enterAt, exitAt);
+            var result = parkingFeeCalculator.CalculateParkingFee(enterAt, exitAt);
             Console.WriteLine(result.Name);
         }
         

@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using RateCalculationEngine.Models;
 using RateCalculationEngine.RateCalculator;
-using RateCalculationEngine.RateTypeChecker;
 
 namespace RateCalculationEngine.Services
 {
-    public class ParkFeeCalculator
+    public class ParkingFeeCalculator: IParkingFeeCalculator
     {
         private readonly IRateTypeService _rateTypeService;
         private readonly IVariableRateCalculator _variableRateCalculator;
         private readonly Func<RateType, IFlatRateCalculator> _flatRateCalculatorFactory;
 
-        public ParkFeeCalculator(IRateTypeService rateTypeService, Func<RateType, IFlatRateCalculator> factory,
+        public ParkingFeeCalculator(IRateTypeService rateTypeService, Func<RateType, IFlatRateCalculator> factory,
             IVariableRateCalculator variableRateCalculator)
         {
             _rateTypeService = rateTypeService;
