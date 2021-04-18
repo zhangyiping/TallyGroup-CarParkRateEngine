@@ -60,7 +60,7 @@ to define assertions.
 
 One unit test covers the requirement that if multiple rates are applicable, the customer should get the cheapest deal.
 For example, if the customer enters at 7:00 am and exit at 4:00 pm on a Saturday. In this case, both early bird and weekend 
-rate are available, and weekend rate should be returned because it is the cheapest.  
+rate are available, and weekend rate should be applied because it is cheaper than early bird rate.  
 ```
 [Test]
 public void ItShouldReturnTheCheapestDealIfMultipleRatesAreApplicable()
@@ -76,6 +76,5 @@ In the unit tests, I demonstrated the ability to create a substitute for depende
 with NSubstitute.
 
 ## Side Note
-The solution is working and all existing unit tests pass. Due to time constraints, calculation logic 
-may result in incorrect value and tests only cover two business rules. However, I believe I have demonstrated
-my ability to structure and test production quality code. 
+The solution is working and all unit tests pass. Due to time constraints, calculation logic 
+may result in incorrect value and tests only cover two business rules.
