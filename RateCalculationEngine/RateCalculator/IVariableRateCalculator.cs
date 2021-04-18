@@ -5,6 +5,6 @@ namespace RateCalculationEngine.RateCalculator
 {
     public interface IVariableRateCalculator
     {
-        public Rate CalculateRate(DateTime entry, DateTime exit);
+        public Rate CalculateRate(DateTime enterAt, DateTime exitAt);
     }
 }

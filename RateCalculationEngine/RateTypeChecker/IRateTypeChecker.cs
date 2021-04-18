@@ -4,6 +4,6 @@ namespace RateCalculationEngine.RateTypeChecker
 {
     public interface IRateTypeChecker
     {
-        public bool IsRateApplicable(DateTime entry, DateTime exit);
+        public bool IsRateApplicable(DateTime enterAt, DateTime exitAt);
     }
 }

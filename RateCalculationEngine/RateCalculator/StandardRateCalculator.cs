@@ -8,15 +8,15 @@ namespace RateCalculationEngine.RateCalculator
         private const decimal DayRate = 20;
         private const string RateName = "Standard";
         
-        public Rate CalculateRate(DateTime entry, DateTime exit)
+        public Rate CalculateRate(DateTime enterAt, DateTime exitAt)
         {
-            var daysOfParking = exit.Day - entry.Day;
+            var daysOfParking = exitAt.Day - enterAt.Day;
             if (daysOfParking > 0)
             {
                 return new Rate {Name = RateName, Price = daysOfParking * DayRate};
             }
 
-            var timeOfParking = exit - entry;
+            var timeOfParking = exitAt - enterAt;
             if (timeOfParking <= new TimeSpan(1, 0, 0))
             {
                 return new Rate{Name = RateName, Price = 5};

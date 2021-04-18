@@ -4,13 +4,13 @@ namespace RateCalculationEngine.RateTypeChecker
 {
     public class WeekendRateChecker: IRateTypeChecker
     {
-        public bool IsRateApplicable(DateTime entry, DateTime exit)
+        public bool IsRateApplicable(DateTime enterAt, DateTime exitAt)
         {
-            switch (entry.DayOfWeek)
+            switch (enterAt.DayOfWeek)
             {
-                case DayOfWeek.Saturday when exit.DayOfWeek == DayOfWeek.Saturday && entry.Day == exit.Day:
-                case DayOfWeek.Saturday when exit.DayOfWeek == DayOfWeek.Sunday && (exit - entry).Days == 1:
-                case DayOfWeek.Sunday when exit.DayOfWeek == DayOfWeek.Sunday && entry.Day == exit.Day:
+                case DayOfWeek.Saturday when exitAt.DayOfWeek == DayOfWeek.Saturday && enterAt.Day == exitAt.Day:
+                case DayOfWeek.Saturday when exitAt.DayOfWeek == DayOfWeek.Sunday && (exitAt - enterAt).Days == 1:
+                case DayOfWeek.Sunday when exitAt.DayOfWeek == DayOfWeek.Sunday && enterAt.Day == exitAt.Day:
                     return true;
                 default:
                     return false;
