@@ -2,6 +2,7 @@
 using Autofac;
 using RateCalculationEngine.Models;
 using RateCalculationEngine.RateCalculator;
+using RateCalculationEngine.RateTypeChecker;
 using RateCalculationEngine.Services;
 
 namespace RateCalculationEngine
@@ -11,15 +12,15 @@ namespace RateCalculationEngine
         static void Main(string[] args)
         {
             var container = BuildContainer();
-            var factory = container.Resolve<Func<RateType, IFlatRateCalculator>>();
 
-            var enterAt = new DateTime(2021, 4, 16, 10, 0, 0);
+            var flatRateCalculatorFactory = container.Resolve<Func<RateType, IFlatRateCalculator>>();
+            ParkFeeCalculator parkFeeCalculator = new ParkFeeCalculator(container.Resolve<IRateTypeService>(), 
+                flatRateCalculatorFactory, container.Resolve<IVariableRateCalculator>());
+            
+            var enterAt = new DateTime(2021, 4, 16, 7, 0, 0);
             var exitAt = new DateTime(2021, 4, 16, 16, 0, 0);
-
-            IParkFeeCalculator hello = new ParkFeeCalculator(factory, container.Resolve<IVariableRateCalculator>());
-            var result = hello.CalculateParkingFee(enterAt, exitAt);
+            var result = parkFeeCalculator.CalculateParkingFee(enterAt, exitAt);
             Console.WriteLine(result.Name);
-
         }
         
         private static IContainer BuildContainer()
@@ -29,24 +30,51 @@ namespace RateCalculationEngine
             builder.RegisterType<RateTypeService>().AsImplementedInterfaces();
             builder.RegisterType<StandardRateCalculator>().AsImplementedInterfaces();
             
+            RegisterRateTypeChecker(builder);
+            RegisterFlatRateCalculator(builder);
+            return builder.Build();
+        }
+
+        private static void RegisterRateTypeChecker(ContainerBuilder builder)
+        {
+            builder.RegisterType<EarlyBirdRateChecker>()
+                .As<IRateTypeChecker>()
+                .Keyed<IRateTypeChecker>(RateType.EarlyBird);
+
+            builder.RegisterType<NightRateChecker>()
+                .As<IRateTypeChecker>()
+                .Keyed<IRateTypeChecker>(RateType.Night);
+
+            builder.RegisterType<WeekendRateChecker>()
+                .As<IRateTypeChecker>()
+                .Keyed<IRateTypeChecker>(RateType.Weekend);
+
+            builder.Register<Func<RateType, IRateTypeChecker>>(c =>
+            {
+                var cc = c.Resolve<IComponentContext>();
+                return named => cc.ResolveKeyed<IRateTypeChecker>(named);
+            });
+        }
+
+        private static void RegisterFlatRateCalculator(ContainerBuilder builder)
+        {
             builder.RegisterType<EarlyBirdRateCalculator>()
                 .As<IFlatRateCalculator>()
                 .Keyed<IFlatRateCalculator>(RateType.EarlyBird);
-            
+
             builder.RegisterType<NightRateCalculator>()
                 .As<IFlatRateCalculator>()
                 .Keyed<IFlatRateCalculator>(RateType.Night);
-            
+
             builder.RegisterType<WeekendRateCalculator>()
                 .As<IFlatRateCalculator>()
                 .Keyed<IFlatRateCalculator>(RateType.Weekend);
-            
+
             builder.Register<Func<RateType, IFlatRateCalculator>>(c =>
             {
                 var cc = c.Resolve<IComponentContext>();
                 return named => cc.ResolveKeyed<IFlatRateCalculator>(named);
             });
-            return builder.Build();
         }
     }
 }

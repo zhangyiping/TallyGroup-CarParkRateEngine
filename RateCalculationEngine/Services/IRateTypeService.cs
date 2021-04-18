@@ -6,6 +6,6 @@ namespace RateCalculationEngine.Services
 {
     public interface IRateTypeService
     {
-        public List<RateType> DetermineRates(DateTime entry, DateTime exit);
+        List<RateType> DetermineApplicableRates(DateTime enterAt, DateTime exitAt);
     }
 }

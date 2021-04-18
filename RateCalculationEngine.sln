@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RateCalculationEngine", "RateCalculationEngine\RateCalculationEngine.csproj", "{7690118A-1347-45D2-8EE7-0D33B25A9B82}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RateCalculationEngine.Test", "RateCalculationEngine.Test\RateCalculationEngine.Test.csproj", "{B5B200CD-11C0-4CE9-9B10-49DE877E595E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{7690118A-1347-45D2-8EE7-0D33B25A9B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7690118A-1347-45D2-8EE7-0D33B25A9B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7690118A-1347-45D2-8EE7-0D33B25A9B82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5B200CD-11C0-4CE9-9B10-49DE877E595E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5B200CD-11C0-4CE9-9B10-49DE877E595E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5B200CD-11C0-4CE9-9B10-49DE877E595E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5B200CD-11C0-4CE9-9B10-49DE877E595E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

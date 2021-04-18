@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using RateCalculationEngine.Models;
 using RateCalculationEngine.RateCalculator;
+using RateCalculationEngine.RateTypeChecker;
 
 namespace RateCalculationEngine.Services
 {
-    public class ParkFeeCalculator: IParkFeeCalculator
+    public class ParkFeeCalculator
     {
+        private readonly IRateTypeService _rateTypeService;
         private readonly IVariableRateCalculator _variableRateCalculator;
         private readonly Func<RateType, IFlatRateCalculator> _flatRateCalculatorFactory;
 
-        public ParkFeeCalculator(Func<RateType, IFlatRateCalculator> factory, IVariableRateCalculator variableRateCalculator)
+        public ParkFeeCalculator(IRateTypeService rateTypeService, Func<RateType, IFlatRateCalculator> factory,
+            IVariableRateCalculator variableRateCalculator)
         {
+            _rateTypeService = rateTypeService;
             _flatRateCalculatorFactory = factory;
             _variableRateCalculator = variableRateCalculator;
         }
@@ -20,10 +24,9 @@ namespace RateCalculationEngine.Services
         public Rate CalculateParkingFee(DateTime enterAt, DateTime exitAt)
         {
             var candidateRates = new List<Rate>();
-            IRateTypeService typeService = new RateTypeService();
-            
-            var rateTypes = typeService.DetermineRates(enterAt, exitAt);
-            foreach (var rateType in rateTypes)
+
+            var applicableRateTypes = _rateTypeService.DetermineApplicableRates(enterAt, exitAt);
+            foreach (var rateType in applicableRateTypes)
             {
                 if (rateType == RateType.Standard)
                 {
@@ -33,7 +36,7 @@ namespace RateCalculationEngine.Services
                 IFlatRateCalculator flatRateCalculator = _flatRateCalculatorFactory(rateType);
                 candidateRates.Add(flatRateCalculator.CalculateRate());
             }
-            
+
             return candidateRates.OrderBy(x => x.Price).ToList().First();
         }
     }
