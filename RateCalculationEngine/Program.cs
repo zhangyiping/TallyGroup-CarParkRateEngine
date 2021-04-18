@@ -16,10 +16,11 @@ namespace RateCalculationEngine
             IParkingFeeCalculator parkingFeeCalculator = new ParkingFeeCalculator(container.Resolve<IRateTypeService>(), 
                 flatRateCalculatorFactory, container.Resolve<IVariableRateCalculator>());
             
-            var enterAt = new DateTime(2021, 4, 16, 7, 0, 0);
-            var exitAt = new DateTime(2021, 4, 16, 16, 0, 0);
+            var enterAt = new DateTime(2021, 4, 16, 10, 0, 0);
+            var exitAt = new DateTime(2021, 4, 16, 11, 30, 0);
             var result = parkingFeeCalculator.CalculateParkingFee(enterAt, exitAt);
             Console.WriteLine(result.Name);
+            Console.WriteLine(result.Price);
         }
         
         private static IContainer BuildContainer()

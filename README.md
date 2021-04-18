@@ -2,7 +2,7 @@
 
 An API calculates correct parking rate for customers.
 
-##API Interface
+## API Interface
 The API accepts two inputs: car entry date and time, and car exit date and time  
 `CalculateParkingFee(enterAt: DateTime, exitAt: DateTime): Rate`  
 
@@ -15,7 +15,7 @@ public class Rate
 }
 ```
 
-##Tech Stack
+## Tech Stack
 C# .NET Core 3.1    
 Autofac  
 NUnit   
@@ -31,7 +31,7 @@ which rate(s) is applicable (defined in RateTypeChecker directory) is separated.
 ### Interface Segregation
 Flat rate calculator classes and variable rate calculator class implement different interfaces
 because flat rate calculator does not required car entry date time and car exit date time.   
-UML illustration as below ![here](./Rate Calculation Logic.png)
+UML illustration as below ![here](./Rate%20Calculation%20Logic.png)
 
 ### Open/Closed Principle
 If there are more types of parking rate in the future, interfaces can be implemented and none of 
