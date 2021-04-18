@@ -46,7 +46,7 @@ namespace RateCalculationEngine.Test.Services
                 .And(x => GivenWeekendRateIsNotApplicable())
                 .When(x => WhenDetermineWhichRateIsApplicable())
                 .Then(x => ThenEarlyBirdRateShouldBeAvailable())
-                .And(x => ThenStandardRateShouldNotBeApplicable())
+                .And(x => ThenStandardRateShouldNotBeAvailable())
                 .BDDfy();
         }
         
@@ -82,7 +82,7 @@ namespace RateCalculationEngine.Test.Services
             _result.ShouldContain(x => x == RateType.EarlyBird);
         }
 
-        private void ThenStandardRateShouldNotBeApplicable()
+        private void ThenStandardRateShouldNotBeAvailable()
         {
             _result.ShouldNotContain(x => x == RateType.Standard);
         }

@@ -25,8 +25,8 @@ NUnit
 
 ## Design Consideration
 ### Separation of Concern
-The calculation of parking fee (defined in RateCalculator directory) and the logic to determine 
-which rate(s) is applicable (defined in RateTypeChecker directory) is separated.
+The actual calculation of parking fee for a given rate (defined in RateCalculator directory) and
+the logic to determine which rate(s) is applicable (defined in RateTypeChecker directory) is separated.
 
 ### Interface Segregation
 Flat rate calculator classes and variable rate calculator class implement different interfaces
@@ -36,6 +36,7 @@ UML illustration as below ![here](./Rate%20Calculation%20Logic.png)
 ### Open/Closed Principle
 If there are more types of parking rate in the future, interfaces can be implemented and none of 
 the existing logic needs to be changed.   
+
 The below UML illustrates that if there is more rate type in the future, `IRateTypeChecker` can be
 implemented to check if the new rate is applicable for given inputs ![here](./Rate%20Checking%20Logic.png)
 
@@ -53,12 +54,13 @@ builder.RegisterType<NightRateChecker>()
  ```
 
 ## Unit Test
-Unit test is in Behavior Driven Development(BDD) format. One example is to cover the requirement that if 
-multiple rates are applicable e.g. enter at 7:00 am and exit at 4:00 pm on a Saturday. In this case, both 
-early bird and weekend rate are available. Weekend rate should be returned because it is the cheapest deal.  
+Unit test is in Behavior Driven Development(BDD) format. <u>Given</u> clause is used to set up conditions 
+and prepare input data. <u>When</u> clause performs the test subject operation. <u>Then</u> clause is used 
+to define assertions. 
 
-<u>Given</u> clause is used to set up conditions and prepare input data. <u>When</u> clause performs the test subject 
-operation. <u>Then</u> clause is used to define assertions.  
+One unit covers the requirement that if multiple rates are applicable e.g. enter at 7:00 am and exit at 4:00 pm
+on a Saturday. In this case, both early bird and weekend rate are available. Weekend rate should be
+returned because it is the cheapest deal.  
 ```
 [Test]
 public void ItShouldReturnTheCheapestDealIfMultipleRatesAreApplicable()
@@ -69,6 +71,9 @@ public void ItShouldReturnTheCheapestDealIfMultipleRatesAreApplicable()
         .BDDfy();
 }
 ```
+
+In the unit tests, I demonstrated the ability to create a substitute for dependency and set a return value 
+with NSubstitute.
 
 ## Side Note
 The solution is working and all existing unit tests pass. Due to time constraints, calculation logic 
