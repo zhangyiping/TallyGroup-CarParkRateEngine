@@ -6,11 +6,11 @@ namespace RateCalculationEngine.RateCalculator
     public class StandardRateCalculator: IVariableRateCalculator
     {
         private const decimal DayRate = 20;
-        private const string RateName = "Standard";
+        private const string RateName = "Standard Rate";
         
         public Rate CalculateRate(DateTime enterAt, DateTime exitAt)
         {
-            var daysOfParking = exitAt.Day - enterAt.Day;
+            var daysOfParking = exitAt.Day - enterAt.Day + 1;
             if (daysOfParking > 0)
             {
                 return new Rate {Name = RateName, Price = daysOfParking * DayRate};
